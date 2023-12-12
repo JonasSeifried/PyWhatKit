@@ -4,6 +4,7 @@ import time
 from platform import system
 from urllib.parse import quote
 from webbrowser import open
+import pyperclip
 
 import requests
 from pyautogui import click, hotkey, locateOnScreen, moveTo, press, size, typewrite
@@ -105,30 +106,11 @@ def send_message(message: str, receiver: str, wait_time: int) -> None:
 
     _web(receiver=receiver, message=message)
     time.sleep(7)
+    pyperclip.copy(message)
     click(WIDTH / 2, HEIGHT / 2 + 15)
-    time.sleep(wait_time - 7)
+    time.sleep(max(wait_time - 7, 0))
     if not check_number(number=receiver):
-        index = 0
-        length = len(message)
-        while index < length:
-            letter = message[index]
-            if letter == ":":    
-                typewrite(letter)
-                index += 1
-                while index < length:
-                    letter = message[index]
-                    if letter == ":":
-                        press("enter")
-                        break
-                    typewrite(letter)
-                    index += 1
-            elif letter == "\n":
-                hotkey("shift", "enter")
-            else:
-                typewrite(letter)
-            index += 1
-        press("enter")
-        
+        hotkey("ctrl", "v")
     findtextbox()
     press("enter")
 
