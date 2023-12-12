@@ -106,15 +106,26 @@ def send_message(message: str, receiver: str, wait_time: int) -> None:
     """Parses and Sends the Message"""
 
     _web(receiver=receiver, message=message)
-    time.sleep(7)
-    pyperclip.copy(message)
+    time.sleep(wait_time)
+    copy_clipboard()
     click(WIDTH / 2, HEIGHT / 2 + 15)
-    time.sleep(max(wait_time - 7, 0))
     if not check_number(number=receiver):
-        hotkey("ctrl", "v")
+        paste_clipboard()
     else:
         findtextbox()
     press("enter")
+
+def copy_clipboard(message: str) -> None:
+    pyperclip.copy(message)
+    
+def paste_clipboard() -> None:
+    _system = system().lower()
+    if _system in ("windows", "linux"):
+        hotkey("ctrl", "v")
+    elif _system == "darwin":
+        hotkey("command", "v")
+    else:
+        raise Warning(f"{_system} not supported!")
 
 
 def send_message_list(message: list, receiver: str, wait_time: int) -> None:

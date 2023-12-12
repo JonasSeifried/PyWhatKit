@@ -35,22 +35,10 @@ def sendwhatmsg_instantly(
 
     web.open(f"https://web.whatsapp.com/send?phone={phone_no}")
     time.sleep(wait_time)
-    index = 0
-    length = len(message)
-    while index < length:
-        letter = message[index]
-        pg.write(letter)
-        if letter == ":":
-            index += 1
-            while index < length:
-                letter = message[index]
-                if letter == ":":
-                    pg.press("enter")
-                    break
-                pg.write(letter)
-                index += 1
-        index += 1
+    core.copy_clipboard(message=message)
+    core.paste_clipboard()
     pg.press("enter")
+
     log.log_message(_time=time.localtime(), receiver=phone_no, message=message)
     if tab_close:
         core.close_tab(wait_time=close_time)
