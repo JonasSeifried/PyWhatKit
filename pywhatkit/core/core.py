@@ -107,7 +107,7 @@ def send_message(message: str, receiver: str, wait_time: int) -> None:
 
     _web(receiver=receiver, message=message)
     time.sleep(wait_time)
-    copy_clipboard()
+    copy_clipboard(message=message)
     click(WIDTH / 2, HEIGHT / 2 + 15)
     if not check_number(number=receiver):
         paste_clipboard()
