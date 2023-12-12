@@ -36,6 +36,7 @@ def sendwhatmsg_instantly(
     web.open(f"https://web.whatsapp.com/send?phone={phone_no}")
     time.sleep(wait_time)
     core.copy_clipboard(message=message)
+    core.click(core.WIDTH / 2, core.HEIGHT / 2 + 15)
     core.paste_clipboard()
     pg.press("enter")
 
